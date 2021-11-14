@@ -1,6 +1,6 @@
 from json import load, dump
 
-def gen_model(string):
+def gen_model(string, texture='default.png'):
   string = string.upper()
 
   string_len = 0
@@ -9,7 +9,7 @@ def gen_model(string):
       string_len += len_dict[char]
   start_point = int(string_len / 2 * -1) + len_dict[string[0]] / 2
 
-  model = {'name': string.lower(), "texture": "default.png", "texture_size": [ 1000, 1000 ]}
+  model = {'name': string.lower(), "texture": texture, "texture_size": [ 1000, 1000 ]}
   model['parts'] = []
   
   for i, char in enumerate(string):
@@ -70,6 +70,7 @@ if __name__ == '__main__':
   from argparse import ArgumentParser
   parser = ArgumentParser(description='Generate Minecraft-styled .mimodel files.')
   parser.add_argument('-i','--input', nargs='+', help='What text to generate the .mimodel from.', required=True)
+  parser.add_argument('-t','--texture', help='What texture file to use for the model.')
   args = parser.parse_args()
   if args.input:
     gen_model(' '.join(args.input))
